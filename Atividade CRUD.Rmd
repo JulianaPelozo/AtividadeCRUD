@@ -1,0 +1,80 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+contatos <- data.frame(
+  nome = character(),
+  telefone = character(),
+  email = character(),
+  stringsAsFactors = FALSE
+)
+```
+
+```{r}
+repeat {
+  cat("\n~~~ MENU DE CONTATOS ~~~\n")
+  cat("1 - Adicionar contato\n")
+  cat("2 - Editar contato\n")
+  cat("3 - Remover contato\n")
+  cat("4 - Listar contatos\n")
+  cat("5 - Sair\n")
+  resposta <- as.integer(readline("Escolha uma opção: "))
+
+  if (resposta == 1) {
+    nome <- readline("Nome: ")
+    telefone <- readline("Telefone: ")
+    email <- readline("Email: ")
+
+    novo <- data.frame(nome = nome, telefone = telefone, email = email, stringsAsFactors = FALSE)
+    contatos <- rbind(contatos, novo)
+    cat("C1
+        Contato adicionado!\n")
+
+  } else if (resposta == 2) {
+    if (nrow(contatos) == 0) {
+      cat("Nenhum contato para editar.\n")
+    } else {
+      print(contatos)
+      idx <- as.integer(readline("Digite o número do contato que deseja editar: "))
+      if (idx >= 1 && idx <= nrow(contatos)) {
+        contatos$nome[idx] <- readline("Novo nome: ")
+        contatos$telefone[idx] <- readline("Novo telefone: ")
+        contatos$email[idx] <- readline("Novo email: ")
+        cat("Contato atualizado!\n")
+      } else {
+        cat("Índice inválido.\n")
+      }
+    }
+
+  } else if (resposta == 3) {
+    if (nrow(contatos) == 0) {
+      cat("Nenhum contato para remover.\n")
+    } else {
+      print(contatos)
+      idx <- as.integer(readline("Digite o número do contato que deseja remover: "))
+      if (idx >= 1 && idx <= nrow(contatos)) {
+        contatos <- contatos[-idx, ]
+        cat(" Contato removido!\n")
+      } else {
+        cat("Índice inválido.\n")
+      }
+    }
+
+  } else if (resposta == 4) {
+    if (nrow(contatos) == 0) {
+      cat("Nenhum contato cadastrado.\n")
+    } else {
+      print(contatos)
+    }
+
+  } else if (resposta == 5) {
+    cat("Obrigado por utilizar o programa! Saindo...\n")
+    break
+
+  } else {
+    cat("Resposta inválida. Tente novamente.\n")
+  }
+}
+```
